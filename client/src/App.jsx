@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen flex flex-col bg-white">
         <Menu />
-        <main className="flex-grow bg-red-300 container mx-auto my-1 px-2 py-2">
+        <main className="flex-grow  container mx-auto my-1 px-2 py-2">
           <Routes>
             <Route path="/" element={<Inicio />} />
           </Routes>

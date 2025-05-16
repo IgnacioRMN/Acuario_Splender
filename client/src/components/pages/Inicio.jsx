@@ -1,8 +1,9 @@
-import Logo from "../../assets/AcuarioSplender.jpg";
+import Logo from "../../assets/AcuarioSplender.png";
+import CatalogoInicio from "./CatalogoInicio";
 
 const Inicio = () => {
   return (
-    <section className="bg-white relative overflow-hidden">
+    <section className=" relative overflow-hidden bg-green-600">
       {/* Fondo decorativo sutil */}
       <div className="absolute inset-0 overflow-hidden opacity-10">
         <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#e67f42] rounded-full mix-blend-multiply filter blur-xl"></div>
@@ -59,6 +60,9 @@ const Inicio = () => {
           </div>
         </div>
       </div>
+
+      {/* Catálogo */}
+      <CatalogoInicio />
     </section>
   );
 };
