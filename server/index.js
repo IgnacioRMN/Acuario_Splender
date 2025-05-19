@@ -1,8 +1,21 @@
 const express = require(`express`);
+const mongoose = require(`mongoose`);
+const bodyParser = require(`body-parser`);
 const { config } = require(`dotenv`);
 config();
 
-const server = express();
+const productRoutes = require(`./routes/product.routes`);
+
+// express para los middlewares
+const app = express();
+app.use(bodyParser.json());
+
+//conexion a base de datos
+mongoose.connect(process.env.MONGO_URL, { dbName: process.env.MONGO_DB_NAME });
+const db = mongoose.connection;
+
+app.use(`/products`);
+//
 const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
