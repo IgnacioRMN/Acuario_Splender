@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
 });
 
 // obtener un producto por ID // GET
-router.get("/:id", getProduct, (req, res) => {
+router.get("/:id", getProduct, async (req, res) => {
   res.status(200).json(res.product);
 });
 
@@ -79,6 +79,78 @@ router.post("/", async (req, res) => {
     res.status(400).json({
       message: error.message,
     });
+  }
+});
+
+// actualizar completamente un producto // PUT
+router.put("/:id", getProduct, async (req, res) => {
+  const { nombre, precio, descripcion, img, stock, fechaRegistro, categoria } =
+    req.body;
+
+  // Validación básica
+  if (
+    !nombre ||
+    !precio ||
+    !descripcion ||
+    !img ||
+    !stock ||
+    !fechaRegistro ||
+    !categoria
+  ) {
+    return res.status(400).json({
+      message: "Todos los campos son obligatorios para actualizar (PUT).",
+    });
+  }
+
+  try {
+    res.product.nombre = nombre;
+    res.product.precio = precio;
+    res.product.descripcion = descripcion;
+    res.product.img = img;
+    res.product.stock = stock;
+    res.product.fechaRegistro = fechaRegistro;
+    res.product.categoria = categoria;
+
+    const updatedProduct = await res.product.save();
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// actualizar parcialmente un producto // PATCH
+router.patch("/:id", getProduct, async (req, res) => {
+  try {
+    const campos = [
+      "nombre",
+      "precio",
+      "descripcion",
+      "img",
+      "stock",
+      "fechaRegistro",
+      "categoria",
+    ];
+
+    campos.forEach((campo) => {
+      if (req.body[campo] !== undefined) {
+        res.product[campo] = req.body[campo];
+      }
+    });
+
+    const updatedProduct = await res.product.save();
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// eliminar un producto // DELETE
+router.delete("/:id", getProduct, async (req, res) => {
+  try {
+    await res.product.deleteOne();
+    res.status(200).json({ message: "Producto eliminado correctamente" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
