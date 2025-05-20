@@ -14,10 +14,10 @@ app.use(bodyParser.json());
 mongoose.connect(process.env.MONGO_URL, { dbName: process.env.MONGO_DB_NAME });
 const db = mongoose.connection;
 
-app.use(`/products`);
+app.use(`/products`, productRoutes);
 //
 const port = process.env.PORT || 3000;
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`servidor iniciado en el puerto ${port}`);
 });
